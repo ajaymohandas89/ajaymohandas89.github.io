@@ -33,8 +33,8 @@ dynamic secrets engines can attach a lease to a secret and Vault will
 track and revoke it on a schedule. But that subsystem exists for engines
 that opt into it — it doesn't retroactively give MinIO's own access keys
 an expiration concept they don't have. An existing open-source plugin
-(kula/vault-plugin-secrets-minio) already bridged Vault and MinIO at a
-basic level. What it didn't have was a real lifecycle, or a way to issue
+([kula/vault-plugin-secrets-minio](https://github.com/kula/vault-plugin-secrets-minio))
+already bridged Vault and MinIO at a basic level. What it didn't have was a real lifecycle, or a way to issue
 genuinely short-lived credentials instead of just long-lived ones with a
 nicer API in front of them.
 
@@ -70,3 +70,12 @@ getting static keys because they're simpler to issue.
 The next post covers how the actual architecture pulls this off —
 including a detail about how the two credential types are a lot less
 independent than I expected going in.
+
+---
+
+*Thanks to Kula for the original
+[vault-plugin-secrets-minio](https://github.com/kula/vault-plugin-secrets-minio),
+which this work builds on. The plugin's foundation (MinIO configuration,
+roles, and per-request user provisioning) started there. The credential
+lifecycle with its grace period, the STS path, multiplexing support, and
+the testing work described in this series are my extensions.*
