@@ -1,0 +1,39 @@
+{% assign series = site.posts | reverse %}
+<aside class="aside">
+  <p class="side-label">By the numbers</p>
+  <ul class="stats">
+    <li class="stat">
+      <p class="stat-value">360×</p>
+      <p class="stat-label">
+        Throughput gap between static and STS credentials, mostly TLS
+        handshake cost.
+      </p>
+    </li>
+    <li class="stat">
+      <p class="stat-value">51</p>
+      <p class="stat-label">Test cases, covering ~80% of the plugin's logic.</p>
+    </li>
+    <li class="stat">
+      <p class="stat-value">72%</p>
+      <p class="stat-label">
+        STS success rate at just 10 req/s open-loop, the capacity cliff.
+      </p>
+    </li>
+    <li class="stat">
+      <p class="stat-value">0</p>
+      <p class="stat-label">
+        Credential state lost across a full DR failover and failback.
+      </p>
+    </li>
+  </ul>
+  {% if include.figure %}
+  <a class="figure-card" href="{{ series[1].url | relative_url }}">
+    <img
+      src="{{ '/assets/fig-architecture.png' | relative_url }}"
+      alt="Architecture diagram: Vault core, the multiplexed plugin process, and MinIO"
+      loading="lazy"
+    />
+    <span>See the architecture →</span>
+  </a>
+  {% endif %}
+</aside>

@@ -1,3 +1,5 @@
 theme: jekyll-theme-minimal
 title: Ajay Mohandas
 description: Notes on building and operating secrets-management infrastructure.
+permalink: /:title/
+exclude: [".DS_Store"]

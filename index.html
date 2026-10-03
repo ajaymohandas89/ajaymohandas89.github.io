@@ -1,19 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ajay Mohandas</title>
-</head>
-<body>
-  <h1>Ajay Mohandas</h1>
-  <p>Notes on building and operating secrets-management infrastructure.</p>
+---
+layout: base
+---
+{% assign series = site.posts | reverse %}
+<aside class="side">
+  {% include identity.html %}
+  <div class="side-block">
+    <p class="side-label">Topics</p>
+    <ul class="tags">
+      <li>Vault</li>
+      <li>MinIO</li>
+      <li>STS</li>
+      <li>Go</li>
+      <li>Zero trust</li>
+      <li>STRIDE</li>
+    </ul>
+  </div>
+  <div class="side-block side-block--wide-only">
+    <p class="side-label">Elsewhere</p>
+    <ul class="links">
+      <li><a href="https://github.com/ajaymohandas89">GitHub</a></li>
+      <li>
+        <a href="https://github.com/ajaymohandas89/vault-plugin-secrets-minio"
+          >The plugin</a
+        >
+      </li>
+    </ul>
+  </div>
+</aside>
 
-  <h2>Writing</h2>
-  <ul>
-    <li><a href="_posts/2026-10-01-two-lifecycles-for-one-credential.md">Why I Gave MinIO Credentials Two Different Lifecycles</a></li>
-    <li><a href="_posts/2026-10-08-profiling-the-bottleneck-that-wasnt-our-code.md">I Profiled Our Vault Plugin and the Bottleneck Wasn't Our Code</a></li>
-    <li><a href="_posts/2026-10-15-testing-disaster-recovery-on-purpose.md">Testing Disaster Recovery for a Vault Plugin: Taking Down Production on Purpose</a></li>
-  </ul>
-</body>
-</html>
+<main class="main">
+  <section class="hero">
+    <p class="hero-kicker">A {{ series.size }}-part series · Vault × MinIO</p>
+    <h1 class="hero-title">
+      Short-lived credentials for MinIO, <em>measured</em> under load.
+    </h1>
+    <p class="hero-abstract">
+      Static, hard-coded credentials remain a significant source of exposure
+      in cloud-native object storage deployments. This work extends an
+      open-source HashiCorp Vault secrets engine for MinIO with two
+      deliberately distinct credential models &mdash; controlled-lifetime
+      static credentials and short-lived Security Token Service (STS)
+      credentials &mdash; each selectable per role via a single role-based
+      control plane. Beyond the credential paths themselves, the primary
+      contribution is making the integration testable and empirically
+      measurable: a persistent, lazily-cleaned credential lifecycle state
+      machine, a full test suite, and a benchmarking and CPU-profiling
+      methodology that quantifies the operational cost of each path under
+      load. Results show a substantial throughput and latency gap between the
+      two paths, with profiling attributing most of the STS cost to TLS/x509
+      handshake overhead rather than credential logic &mdash; findings framed
+      within a zero-trust threat model.
+    </p>
+  </section>
+
+  <p class="section-label">Writing</p>
+  <ol class="posts">
+    {% for post in series %}
+    <li class="post">
+      <span class="post-num">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+      <div>
+        <p class="post-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </p>
+        <p class="post-desc">{{ post.description }}</p>
+        <p class="post-date">{{ post.date | date: "%b %-d, %Y" }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</main>
+
+{% include stats.html figure=true %}

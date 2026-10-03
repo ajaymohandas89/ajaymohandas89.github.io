@@ -1,0 +1,47 @@
+---
+layout: base
+page_class: page--post
+---
+{% assign series = site.posts | reverse %}
+<aside class="side">
+  {% include identity.html %}
+  <div class="side-block side-block--wide-only">
+    <p class="side-label">The series</p>
+    <ol class="series">
+      {% for p in series %}
+      <li{% if p.url == page.url %} class="is-current"{% endif %}>
+        <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</aside>
+
+<main class="main">
+  <article>
+    {% for p in series %}{% if p.url == page.url %}{% assign part = forloop.index %}{% endif %}{% endfor %}
+    <p class="article-meta">
+      Part {{ part }} of {{ series.size }} · {{ page.date | date: "%b %-d, %Y" }}
+    </p>
+    <h1 class="article-title">{{ page.title }}</h1>
+    {% if page.description %}
+    <p class="article-lede">{{ page.description }}</p>
+    {% endif %}
+    <div class="article-body">{{ content }}</div>
+  </article>
+
+  <nav class="pager" aria-label="Series navigation">
+    {% if page.previous %}
+    <a class="prev" href="{{ page.previous.url | relative_url }}">
+      <small>← Previous</small>{{ page.previous.title }}
+    </a>
+    {% endif %}
+    {% if page.next %}
+    <a class="next" href="{{ page.next.url | relative_url }}">
+      <small>Next →</small>{{ page.next.title }}
+    </a>
+    {% endif %}
+  </nav>
+</main>
+
+{% include stats.html %}
