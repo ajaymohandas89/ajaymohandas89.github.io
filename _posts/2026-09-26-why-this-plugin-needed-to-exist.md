@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Why This Plugin Needed to Exist"
-date: 2026-09-28
+date: 2026-09-26
 description: "Static keys that never expire by default, and the gap between what MinIO provides and what a real credential lifecycle needs."
 ---
 

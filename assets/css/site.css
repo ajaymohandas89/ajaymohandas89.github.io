@@ -54,7 +54,7 @@ body::before {
 .page {
   max-width: 680px;
   margin: 0 auto;
-  padding: 56px 24px 96px;
+  padding: 56px 24px 72px;
 }
 .side,
 .aside {
@@ -71,7 +71,7 @@ body::before {
     grid-template-columns: 220px minmax(0, 680px) 250px;
     justify-content: center;
     column-gap: 56px;
-    padding: 72px 32px 96px;
+    padding: 72px 32px 72px;
   }
   .page--post {
     grid-template-columns: 220px minmax(0, 700px) 250px;
@@ -81,6 +81,14 @@ body::before {
     position: sticky;
     top: 48px;
     align-self: start;
+    /* Taller than the window: scroll the rail itself instead of clipping it. */
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .side::-webkit-scrollbar,
+  .aside::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -344,6 +352,53 @@ body::before {
   color: var(--ink-soft);
   margin: 0;
 }
+.stat--perf {
+  grid-column: 1 / -1;
+}
+.stat-heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 0 4px;
+}
+.perf-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.perf-name {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0 0 6px;
+}
+.stat--perf .stat-value {
+  font-size: 30px;
+  margin-bottom: 4px;
+}
+.unit {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  margin-left: 6px;
+}
+.perf-note {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin: 10px 0 0;
+}
+@media (min-width: 600px) and (max-width: 1099px) {
+  .stat--perf {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+  }
+  .stat--perf .stat-heading,
+  .stat--perf .perf-note {
+    grid-column: 1 / -1;
+  }
+}
 .figure-card {
   display: block;
   margin-top: 12px;
@@ -492,14 +547,30 @@ body::before {
   text-align: right;
 }
 
-footer {
-  grid-column: 1 / -1;
-  margin-top: 72px;
-  padding-top: 24px;
-  border-top: 1px solid var(--rule);
+/* Lives outside .page so the sticky sidebars can never slide over it. */
+.site-footer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 24px 64px;
   font-size: 14px;
   color: var(--muted);
 }
-footer a {
+.site-footer::before {
+  content: "";
+  display: block;
+  border-top: 1px solid var(--rule);
+  margin-bottom: 24px;
+}
+@media (max-width: 1099px) {
+  .site-footer {
+    max-width: 680px;
+  }
+}
+@media (min-width: 1100px) {
+  .site-footer {
+    padding: 24px 32px 64px;
+  }
+}
+.site-footer a {
   color: var(--muted);
 }

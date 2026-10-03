@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The Architecture, With Diagrams"
-date: 2026-09-29
+date: 2026-09-27
 description: "How Vault talks to the plugin, why multiplexing matters, and the shared machinery behind both credential paths."
 ---
 
@@ -67,5 +67,4 @@ role's backing identity is private to that role, bounded the same way a
 static role's credential is bounded. The blast radius of a bad day is one
 role, not the whole mount.
 
-Next up: what it took to actually trust this thing enough to call it
-tested.
+Next up: the two credential paths, one at a time, starting with static.

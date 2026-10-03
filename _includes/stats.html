@@ -2,22 +2,23 @@
 <aside class="aside">
   <p class="side-label">By the numbers</p>
   <ul class="stats">
-    <li class="stat">
-      <p class="stat-value">360×</p>
-      <p class="stat-label">
-        Throughput gap between static and STS credentials, mostly TLS
-        handshake cost.
-      </p>
+    <li class="stat stat--perf">
+      <p class="stat-heading">Performance</p>
+      <div class="perf-row">
+        <p class="perf-name">Static credentials</p>
+        <p class="stat-value">4,195<span class="unit">req/s</span></p>
+        <p class="stat-label">1.88 ms average latency</p>
+      </div>
+      <div class="perf-row">
+        <p class="perf-name">STS credentials</p>
+        <p class="stat-value">11.6<span class="unit">req/s</span></p>
+        <p class="stat-label">860 ms average latency</p>
+      </div>
+      <p class="perf-note">autocannon · 10 connections · 100 s</p>
     </li>
     <li class="stat">
       <p class="stat-value">51</p>
       <p class="stat-label">Test cases, covering ~80% of the plugin's logic.</p>
-    </li>
-    <li class="stat">
-      <p class="stat-value">72%</p>
-      <p class="stat-label">
-        STS success rate at just 10 req/s open-loop, the capacity cliff.
-      </p>
     </li>
     <li class="stat">
       <p class="stat-value">0</p>
