@@ -68,11 +68,27 @@ window, but neither path masks credentials in application-level logs
 outside Vault's control. That's always going to be true for any system
 handing a credential to a client.
 
-**Denial of service** — this is the one the vegeta results from the last
-post feed directly into. No rate-limiting exists at the plugin layer
-itself; the capacity-cliff behavior under open-loop load is a real,
-currently unmitigated risk beyond whatever network-level controls sit in
-front of it.
+**Denial of service** — this is the one the open-loop load test feeds
+directly into. Autocannon, used for the benchmarks in the last post, is a
+*closed-loop* tool: it only sends a new request once the last one on that
+connection finishes, so it can never offer more load than the server can
+absorb. To find out what happens when offered load actually exceeds
+capacity, I used vegeta instead, an *open-loop* tool that injects
+requests at a fixed rate no matter what the server is doing. On the STS
+path:
+
+| Offered rate | Actual throughput | Success rate | Mean latency |
+|---|---|---|---|
+| 10 req/s | 4.82 req/s | 71.8% | 25.9 seconds |
+| 15 req/s | 3.94 req/s | 39.3% | 22.9 seconds |
+| 20 req/s | 2.13 req/s | 16.0% | 28.8 seconds |
+
+At an offered rate barely above what the closed-loop test called
+sustainable, success collapsed to 72%, with average wait times jumping to
+nearly 26 seconds. That's a real capacity cliff the closed-loop numbers
+alone never revealed. No rate-limiting exists at the plugin layer itself,
+so this is a real, currently unmitigated risk beyond whatever
+network-level controls sit in front of it.
 
 **Elevation of privilege** — the category this design handles most
 completely. Policy-subset validation on the STS path, and the bounded

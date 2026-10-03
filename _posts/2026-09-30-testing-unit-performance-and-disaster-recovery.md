@@ -2,7 +2,7 @@
 layout: post
 title: "Testing It: Unit, Performance, and Disaster Recovery"
 date: 2026-09-30
-description: "51 test cases, a 360x performance gap, an open-loop capacity cliff, and a live failover drill against a real cluster."
+description: "51 test cases, throughput and latency for each credential path under load, and a live failover drill against a real cluster."
 ---
 
 "It works on my machine" doesn't mean much for something that manages
@@ -42,28 +42,15 @@ outlier — I chased that down separately (worth its own read, but short
 version: it was the one-time cost of provisioning a brand-new role's
 backing credential, not a recurring problem).
 
-The STS path tells a different story. At the same concurrency levels, it
-tops out around 11 requests/sec, with average latency around 850ms–1.9
-seconds depending on load. That's roughly a 360x throughput gap against
-the static path — and profiling traced almost all of that cost to TLS
-handshake and certificate verification, not to anything in the plugin's
-own logic.
+The STS path makes a live `AssumeRole` call to MinIO on every request.
+At the same concurrency levels, it handles around 11 requests/sec, with
+average latency around 850ms–1.9 seconds depending on load. Profiling
+traced almost all of that time to TLS handshake and certificate
+verification, not to anything in the plugin's own logic.
 
-### The test that actually worried me
-
-Autocannon is a *closed-loop* tool: it only sends a new request once the
-last one on that connection finishes, which means it can never truly
-offer more load than the server can absorb. To find out what happens when
-offered load actually exceeds capacity, I used vegeta instead — an
-*open-loop* tool that injects requests at a fixed rate no matter what the
-server is doing.
-
-At an offered rate of just 10 requests/sec on the STS path — barely above
-what the closed-loop test called "sustainable" — success collapsed to
-72%, with average wait times jumping to nearly 26 seconds. Push it to 20
-req/s and you're down to 16% success, with most requests simply timing
-out. That's a real capacity cliff that the closed-loop numbers alone
-never revealed.
+I also ran an open-loop load test against the STS path. Those results
+matter most as a denial-of-service question, so they're covered in the
+threat model post.
 
 ## Does it survive losing a datacenter?
 

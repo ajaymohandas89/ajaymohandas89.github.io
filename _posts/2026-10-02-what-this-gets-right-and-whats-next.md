@@ -11,8 +11,8 @@ accounting of both sides, and where I'm taking this next.
 ### What the static path gets right
 
 No per-request network round trip once a credential is active — it's a
-storage lookup, not a live issuance call, which is the entire reason it's
-roughly 360x faster than the STS path under load. It suits long-running
+storage lookup, not a live issuance call, which keeps its latency in
+single-digit milliseconds under load. It suits long-running
 or offline workloads that can't realistically re-authenticate every few
 minutes. And the grace period means rotation doesn't mean breakage —
 an old credential keeps working for a bounded window after a new one
@@ -84,8 +84,9 @@ reliability" bullet:
   multiple MinIO deployments.
 - A compensating control for STS's revocation gap — a shorter default
   session TTL, or a documented signing-key-rotation runbook.
-- Persistent HTTP client reuse for the STS path, to close most of that
-  360x gap without touching its security properties at all.
+- Persistent HTTP client reuse for the STS path, to remove most of the
+  TLS handshake cost that profiling found, without touching its security
+  properties at all.
 
 None of this was obvious when I started. Most of it came from actually
 profiling, load-testing, and failing this thing on purpose, rather than
