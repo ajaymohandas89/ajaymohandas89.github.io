@@ -3,3 +3,5 @@ vault-minio:
   kicker: "Vault × MinIO"
   url: /vault-minio/
   summary: "Extending an open-source Vault secrets engine for MinIO with static and short-lived STS credentials, then testing, benchmarking and threat-modeling both."
+  repo: https://github.com/ajaymohandas89/vault-plugin-secrets-minio
+  repo_name: "Vault MinIO Secrets Plugin"

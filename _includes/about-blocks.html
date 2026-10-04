@@ -17,14 +17,13 @@
     <li>Go</li>
   </ul>
 </div>
-<div class="side-block side-block--wide-only">
+<div class="side-block">
   <p class="side-label">Elsewhere</p>
   <ul class="links">
     <li><a href="https://github.com/ajaymohandas89">GitHub</a></li>
-    <li>
-      <a href="https://github.com/ajaymohandas89/vault-plugin-secrets-minio"
-        >The plugin</a
-      >
-    </li>
+    <li><a href="https://www.linkedin.com/in/ajay-mohandas">LinkedIn</a></li>
+    {% if include.series %}{% assign s_info = site.data.series[include.series] %}
+    <li><a href="{{ s_info.repo }}">{{ s_info.repo_name }}</a></li>
+    {% endif %}
   </ul>
 </div>

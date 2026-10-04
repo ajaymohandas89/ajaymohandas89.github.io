@@ -18,9 +18,10 @@
       {{ content }}
     </div>
     <footer class="site-footer">
-      <a href="https://github.com/ajaymohandas89/vault-plugin-secrets-minio"
-        >Vault MinIO Secrets Plugin</a
-      >
+      © {{ site.time | date: "%Y" }} Ajay Mohandas
+      {% if page.series %}{% assign f_info = site.data.series[page.series] %}
+      · <a href="{{ f_info.repo }}">{{ f_info.repo_name }}</a>
+      {% endif %}
     </footer>
   </body>
 </html>

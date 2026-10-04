@@ -1,12 +1,13 @@
 ---
 layout: base
+series: vault-minio
 title: Zero-trust MinIO credentials
 description: "A 7-part series on zero-trust MinIO credentials, powered by a custom Vault secret plugin."
 ---
 {% assign series = site.posts | where: "series", "vault-minio" | reverse %}
 <aside class="side">
   {% include identity.html %}
-  {% include about-blocks.html %}
+  {% include about-blocks.html series="vault-minio" %}
 </aside>
 
 <main class="main">
