@@ -726,3 +726,29 @@ body::before {
 .side-label a:hover {
   color: var(--accent);
 }
+
+/* ---------- Comments (giscus) ---------- */
+.comments {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+}
+.comments-heading {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin: 0 0 8px;
+}
+.comments-note {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+.comments-note a {
+  color: var(--ink-soft);
+}
+.giscus,
+.giscus-frame {
+  width: 100%;
+}
