@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Architecture, With Diagrams"
+series: vault-minio
 date: 2026-09-27
 description: "How Vault talks to the plugin, why multiplexing matters, and the shared machinery behind both credential paths."
 ---

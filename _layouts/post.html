@@ -2,11 +2,20 @@
 layout: base
 page_class: page--post
 ---
-{% assign series = site.posts | reverse %}
+{% if page.series %}
+{% assign info = site.data.series[page.series] %}
+{% assign series = site.posts | where: "series", page.series | reverse %}
+{% for p in series %}{% if p.url == page.url %}{% assign part = forloop.index %}{% endif %}{% endfor %}
+{% if part > 1 %}{% assign prev_i = part | minus: 2 %}{% assign prev_post = series[prev_i] %}{% endif %}
+{% if part < series.size %}{% assign next_post = series[part] %}{% endif %}
+{% endif %}
 <aside class="side">
   {% include identity.html %}
+  {% if page.series %}
   <div class="side-block side-block--wide-only">
-    <p class="side-label">The series</p>
+    <p class="side-label">
+      <a href="{{ info.url | relative_url }}">{{ info.name }}</a>
+    </p>
     <ol class="series">
       {% for p in series %}
       <li{% if p.url == page.url %} class="is-current"{% endif %}>
@@ -15,13 +24,15 @@ page_class: page--post
       {% endfor %}
     </ol>
   </div>
+  {% else %}
+  {% include about-blocks.html %}
+  {% endif %}
 </aside>
 
 <main class="main">
   <article>
-    {% for p in series %}{% if p.url == page.url %}{% assign part = forloop.index %}{% endif %}{% endfor %}
     <p class="article-meta">
-      Part {{ part }} of {{ series.size }} · {{ page.date | date: "%b %-d, %Y" }}
+      {% if page.series %}Part {{ part }} of {{ series.size }} · {% endif %}{{ page.date | date: "%b %-d, %Y" }}
     </p>
     <h1 class="article-title">{{ page.title }}</h1>
     {% if page.description %}
@@ -30,18 +41,24 @@ page_class: page--post
     <div class="article-body">{{ content }}</div>
   </article>
 
+  {% if page.series %}
   <nav class="pager" aria-label="Series navigation">
-    {% if page.previous %}
-    <a class="prev" href="{{ page.previous.url | relative_url }}">
-      <small>← Previous</small>{{ page.previous.title }}
+    {% if prev_post %}
+    <a class="prev" href="{{ prev_post.url | relative_url }}">
+      <small>← Previous</small>{{ prev_post.title }}
     </a>
     {% endif %}
-    {% if page.next %}
-    <a class="next" href="{{ page.next.url | relative_url }}">
-      <small>Next →</small>{{ page.next.title }}
+    {% if next_post %}
+    <a class="next" href="{{ next_post.url | relative_url }}">
+      <small>Next →</small>{{ next_post.title }}
     </a>
     {% endif %}
   </nav>
+  {% endif %}
 </main>
 
+{% if page.series == "vault-minio" %}
 {% include stats.html %}
+{% else %}
+{% include more-writing.html %}
+{% endif %}

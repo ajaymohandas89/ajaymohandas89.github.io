@@ -1,0 +1,5 @@
+vault-minio:
+  name: "Zero-trust MinIO credentials"
+  kicker: "Vault × MinIO"
+  url: /vault-minio/
+  summary: "Extending an open-source Vault secrets engine for MinIO with static and short-lived STS credentials, then testing, benchmarking and threat-modeling both."

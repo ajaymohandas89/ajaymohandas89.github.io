@@ -1,4 +1,4 @@
-{% assign series = site.posts | reverse %}
+{% assign series = site.posts | where: "series", "vault-minio" | reverse %}
 <aside class="aside">
   <p class="side-label">By the numbers</p>
   <ul class="stats">

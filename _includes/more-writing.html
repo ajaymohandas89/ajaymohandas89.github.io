@@ -1,0 +1,32 @@
+{% comment %}Right rail for the homepage and standalone posts: series cards, then recent posts.{% endcomment %}
+<aside class="aside">
+  {% unless include.hide_series %}
+  <p class="side-label">Series</p>
+  <ul class="stats">
+    {% for s in site.data.series %}
+    {% assign key = s[0] %}{% assign info = s[1] %}
+    {% assign count = site.posts | where: "series", key | size %}
+    <li>
+      <a class="series-card" href="{{ info.url | relative_url }}">
+        <span class="series-card-kicker">{{ count }} parts · {{ info.kicker }}</span>
+        <span class="series-card-title">{{ info.name }}</span>
+        <span class="series-card-more">Read the series →</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endunless %}
+
+  {% assign others = site.posts | where_exp: "p", "p.url != page.url" %}
+  {% if others.size > 0 %}
+  <p class="side-label{% unless include.hide_series %} rail-gap{% endunless %}">Latest</p>
+  <ul class="latest">
+    {% for p in others limit: 4 %}
+    <li>
+      <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
+      <span>{{ p.date | date: "%b %-d, %Y" }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</aside>

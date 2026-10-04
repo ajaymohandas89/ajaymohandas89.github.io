@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Testing It: Unit, Performance, and Disaster Recovery"
+series: vault-minio
 date: 2026-09-30
 description: "51 test cases, throughput and latency for each credential path under load, and a live failover drill against a real cluster."
 ---

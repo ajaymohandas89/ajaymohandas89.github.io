@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The Static Path: Long-Lived Keys With a Real Lifecycle"
+series: vault-minio
 date: 2026-09-28
 description: "A MinIO access key that still behaves like one, but with a tracked lifecycle, a grace period for rotation, and a hard cap on how many can exist."
 ---

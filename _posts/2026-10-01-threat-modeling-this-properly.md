@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Threat Modeling This Properly"
+series: vault-minio
 date: 2026-10-01
 description: "What's in scope, what's deliberately out of scope, and a full pass through STRIDE."
 ---

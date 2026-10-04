@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "What This Gets Right, What's Still Missing, and What's Next"
+series: vault-minio
 date: 2026-10-02
 description: "An honest accounting of both credential paths' trade-offs, seven real limitations, and where this goes from here."
 ---

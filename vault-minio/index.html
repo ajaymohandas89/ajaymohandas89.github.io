@@ -1,0 +1,56 @@
+---
+layout: base
+title: Zero-trust MinIO credentials
+description: "A 7-part series on zero-trust MinIO credentials, powered by a custom Vault secret plugin."
+---
+{% assign series = site.posts | where: "series", "vault-minio" | reverse %}
+<aside class="side">
+  {% include identity.html %}
+  {% include about-blocks.html %}
+</aside>
+
+<main class="main">
+  <section class="hero">
+    <p class="hero-kicker">
+      <a href="{{ '/' | relative_url }}">← All writing</a> · A {{ series.size }}-part series · Vault × MinIO
+    </p>
+    <h1 class="hero-title">
+      <em>Zero-trust</em> MinIO credentials, powered by a custom Vault secret plugin.
+    </h1>
+    <p class="hero-abstract">
+      Static, hard-coded credentials remain a significant source of exposure
+      in cloud-native object storage deployments. This work extends an
+      open-source HashiCorp Vault secrets engine for MinIO with two
+      deliberately distinct credential models &mdash; controlled-lifetime
+      static credentials and short-lived Security Token Service (STS)
+      credentials &mdash; each selectable per role via a single role-based
+      control plane. Beyond the credential paths themselves, the primary
+      contribution is making the integration testable and empirically
+      measurable: a persistent, lazily-cleaned credential lifecycle state
+      machine, a full test suite, and a benchmarking and CPU-profiling
+      methodology that quantifies the operational cost of each path under
+      load. Results show a substantial throughput and latency gap between the
+      two paths, with profiling attributing most of the STS cost to TLS/x509
+      handshake overhead rather than credential logic &mdash; findings framed
+      within a zero-trust threat model.
+    </p>
+  </section>
+
+  <p class="section-label">The series</p>
+  <ol class="posts">
+    {% for post in series %}
+    <li class="post">
+      <span class="post-num">{{ forloop.index | prepend: "0" | slice: -2, 2 }}</span>
+      <div>
+        <p class="post-title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </p>
+        <p class="post-desc">{{ post.description }}</p>
+        <p class="post-date">{{ post.date | date: "%b %-d, %Y" }}</p>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</main>
+
+{% include stats.html figure=true %}

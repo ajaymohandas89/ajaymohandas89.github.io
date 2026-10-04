@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "The STS Path: Sessions That Expire on Their Own"
+series: vault-minio
 date: 2026-09-29
 description: "Short-lived sessions issued through MinIO's AssumeRole API, where the expiry is enforced by MinIO itself and the caller never holds a long-lived key."
 ---
